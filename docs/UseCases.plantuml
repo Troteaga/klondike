@@ -1,0 +1,36 @@
+@startuml Use Cases
+
+
+
+@enduml
+
+
+@startuml Player Starts Game
+
+
+
+@enduml
+
+@startuml Player Flips Deck
+
+
+
+@enduml
+
+@startuml Player Moves Card
+
+
+
+@enduml
+
+@startuml Player Restarts Game
+
+
+
+@enduml
+
+@startuml Player Exits Game
+
+
+
+@enduml
