@@ -1,0 +1,8 @@
+@startuml UC_MoveFromFoundationToTableau
+
+hide empty description
+[*] --> GAME_OPEN
+GAME_OPEN --> State1 : Player request to move\ncard from Foundation\nto Tableau
+State1 --> OriginSelected : System allows selection of origin of Movemen
+
+@enduml

@@ -1,0 +1,21 @@
+@startuml
+
+
+state choice1 <<choice>> 
+state choice2 <<choice>> 
+
+hide empty description 
+state "Player request to Move from Waste to Foundation" as 1
+
+[*] --> 1
+
+1 --> choice1
+choice1 --> MoveCard : Waste contains Card
+choice1 --> ShowError : Waste does not contain Card
+ShowError --> [*]
+MoveCard -down-> choice2
+choice2 --> ShowError : Foundation cannot receive Card
+choice2 --> [*] : Foundation can receive Card
+
+
+@enduml
