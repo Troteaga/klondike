@@ -1,0 +1,13 @@
+@startuml RestartGame
+
+hide empty description
+
+state c <<choice>>
+
+[*] --> Confirmation : The Player request to restart game
+Confirmation --> c : System asks for confirmation
+c --> StartGame : Player confirms restart action
+c --> [*] : Player does not confirm restart action
+StartGame --> [*]
+
+@enduml

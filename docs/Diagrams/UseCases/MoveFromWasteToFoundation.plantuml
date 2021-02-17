@@ -1,0 +1,23 @@
+@startuml
+
+hide empty description 
+state c <<choice>>
+state d <<choice>>
+state e <<choice>>
+
+[*] -down-> GAME_OPEN
+GAME_OPEN -down-> state1 : Player select Move from Tableau To Tableau
+state1 -down-> state2 : System allows to select Card to be moved
+state2 -down-> c : Player selects Card to be moved
+c --> ShowError : Invalid card
+c --> state3 : Valid card
+state3 --> d : System allows to select destination Pile
+d --> ShowError : Invalid Destination Pile
+ShowError --> GAME_OPEN
+d --> MoveCard : valid destination Pile
+MoveCard --> GameEvaluation : Show Board
+GameEvaluation --> e 
+e --> GAME_CLOSE : Game is finnish
+e --> GAME_OPEN: Game is finnish
+
+@enduml

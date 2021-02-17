@@ -1,0 +1,10 @@
+@startuml StartGame
+
+hide empty description
+
+[*] --> shuffleDeck : The Player runs \nthe application
+shuffleDeck --> generateFoundationPiles
+generateFoundationPiles --> turnUpperCardFromEachFoundation
+turnUpperCardFromEachFoundation --> [*] : The game is presented \nto the Player
+
+@enduml
