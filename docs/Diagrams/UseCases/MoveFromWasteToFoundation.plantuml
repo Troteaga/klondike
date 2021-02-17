@@ -1,21 +1,23 @@
 @startuml
 
-
-state choice1 <<choice>> 
-state choice2 <<choice>> 
-
 hide empty description 
-state "Player request to Move from Waste to Foundation" as 1
+state c <<choice>>
+state d <<choice>>
+state e <<choice>>
 
-[*] --> 1
-
-1 --> choice1
-choice1 --> MoveCard : Waste contains Card
-choice1 --> ShowError : Waste does not contain Card
-ShowError --> [*]
-MoveCard -down-> choice2
-choice2 --> ShowError : Foundation cannot receive Card
-choice2 --> [*] : Foundation can receive Card
-
+[*] -down-> GAME_OPEN
+GAME_OPEN -down-> state1 : Player select Move from Tableau To Tableau
+state1 -down-> state2 : System allows to select Card to be moved
+state2 -down-> c : Player selects Card to be moved
+c --> ShowError : Invalid card
+c --> state3 : Valid card
+state3 --> d : System allows to select destination Pile
+d --> ShowError : Invalid Destination Pile
+ShowError --> GAME_OPEN
+d --> MoveCard : valid destination Pile
+MoveCard --> GameEvaluation : Show Board
+GameEvaluation --> e 
+e --> GAME_CLOSE : Game is finnish
+e --> GAME_OPEN: Game is finnish
 
 @enduml

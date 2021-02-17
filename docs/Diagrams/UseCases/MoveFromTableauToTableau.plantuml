@@ -12,9 +12,9 @@ c --> ShowError : Invalid card
 c --> state3 : Valid card
 state3 --> d : System allows to select destination Pile
 d --> ShowError : Invalid Destination Pile
+ShowError --> [*]
 d --> MoveCard : valid destination Pile
 MoveCard --> state5 : Show Board
 state5 --> [*]
-ShowError --> [*]
 
 @enduml
