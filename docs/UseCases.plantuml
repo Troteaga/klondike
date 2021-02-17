@@ -17,10 +17,34 @@
 
 @enduml
 
-@startuml Player Moves Card
+@startuml Player Moves Card From Waste to Tableau
+:Open Game;
+repeat :Player Selects Card in Waste;
+repeat while (Valid Card?) is (no)
+repeat :Player Selects Card in Tableau;
+repeat while (Valid Card?) is (no)
+:Display Movement;
+:Open Game;
+@enduml
 
+@startuml Player Request Random Movement
+:**Open Game**;
+:Player Selects Hint;
+:System Calculates Random Legal Movement;
+:Display Movement;
 
-
+if (Game Finished?) then (no)
+  :**Open Game**;
+  stop
+else
+  if (Has Win?) then (yes)
+    :Show Win;
+  else (no)
+    :Show Lost;
+  endif
+  :**Close Game**;
+  stop
+endif
 @enduml
 
 @startuml Player Restarts Game
@@ -30,7 +54,8 @@
 @enduml
 
 @startuml Player Exits Game
-
-
-
+:**OpenGame**;
+:Player selects Exit;
+:System close application;
+end
 @enduml

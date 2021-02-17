@@ -1,6 +1,34 @@
 @startuml Domain Model
 
+Game *--> Player
+Game *--> Tableau
+Game *--> "4" Foundation
+Game *--> Deck
+Game *--> Waste
+Game *--> Movement
 
+Movement *--> Origin
+Movement *--> Destination
+
+Foundation *--> "0..13" Card
+Tableau *--> "7" Pile
+Pile *-->"*" Card
+Deck *-->"*" Card
+Waste *-->"*" Card
+
+Card *--> Value
+Card *--> State
+
+State --|> FaceUp
+State --|> FaceDown
+
+Value *--> Suit
+Value *--> Number
+
+Suit --|> Spades
+Suit --|> Hearts
+Suit --|> Diamonds
+Suit --|> Clubs
 
 @enduml
 

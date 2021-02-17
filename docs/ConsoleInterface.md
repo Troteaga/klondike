@@ -143,6 +143,7 @@ Movement:
 Movement:    P11
 Destination: F2
 Invalid Destination !
+Destination:
 ```
 
 # WIN

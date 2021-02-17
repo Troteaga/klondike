@@ -10,7 +10,7 @@ Player: is the only user of the application (game)
 2. 1 Jugador
 3. Juego: Multiples partidas sin estadistica, ni guardar, ni cargar ni nada.
 4. Se reparte nada más iniciar la aplicación
-5. 1 Tableau 
+5. 1 Tableau
 6. 7 Piles
 7. 4 Foundation
 8. Sacamos cartas de 3 en 3
@@ -20,7 +20,7 @@ Player: is the only user of the application (game)
 
 1. Player start game (Javi)
 
-2. Player move card 
+2. Player move card
 2.1 From Waste to Tableau (Sergio M.)
 2.2 From Waste to Foundation (Javi) 
 2.3 From Tableau to Foundation (Sergio T.)
