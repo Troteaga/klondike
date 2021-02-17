@@ -1,5 +1,0 @@
-@startuml States
-
-[*] --> GameOpen
-
-@enduml
