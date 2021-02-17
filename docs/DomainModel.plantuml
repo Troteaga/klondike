@@ -19,16 +19,24 @@ Waste *-->"*" Card
 Card *--> Value
 Card *--> State
 
-State --|> FaceUp
-State --|> FaceDown
+State <|-- FaceUp
+State <|-- FaceDown
 
 Value *--> Suit
 Value *--> Number
 
-Suit --|> Spades
-Suit --|> Hearts
-Suit --|> Diamonds
-Suit --|> Clubs
+Suit <|-- Spades
+Suit <|-- Hearts
+Suit <|-- Diamonds
+Suit <|-- Clubs
+
+class Origin {
+    +isValid()
+}
+
+class Destination {
+    +isValid()
+}
 
 @enduml
 
