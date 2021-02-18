@@ -1,14 +1,50 @@
 @startuml Domain Model
 
-Game *--> Player
+together {
+    class Foundation
+    class Waste
+    class Deck
+    class Tableau
+}
+
+together {
+    class SelectedCard
+    class Destination
+}
+
+Game *-left-> Player
 Game *--> Tableau
 Game *--> "4" Foundation
 Game *--> Deck
 Game *--> Waste
-Game *--> Movement
+Game *-right-> Movement
 
-Movement *--> Origin
+Movement *--> SelectedCard
 Movement *--> Destination
+
+SelectedCard *--> Source
+SelectedCard *--> Card
+
+Destination *--> Target
+Destination *--> Card
+
+together {
+    interface Source {
+    }
+    interface Target {
+    }
+}
+
+
+
+
+Foundation -up-|> Source
+Pile -up-|> Source
+Waste -up-|> Source
+
+Foundation -up-|> Target
+Pile -up-|> Target
+
 
 Foundation *--> "0..13" Card
 Tableau *--> "7" Pile
@@ -16,21 +52,55 @@ Pile *-->"*" Card
 Deck *-->"*" Card
 Waste *-->"*" Card
 
-Card *--> Value
-Card *--> State
+Card *--> Number
+Card *-right-> Suit
+Card *-left-> State
 
-State <|-- FaceUp
-State <|-- FaceDown
+enum State {
+    FaceUp
+    FaceDown
+}
 
-Value *--> Suit
-Value *--> Number
+
+enum Number{
+    1
+    2
+    ...
+    10
+    J
+    Q
+    K
+}
+
+enum Color {
+    Black
+    Red   
+}
+
+Suit *--> Color
+
+class Spades{
+    Color = Black;
+}
+
+class Clubs{
+    Color = Black;
+}
+
+class Hearts{
+    Color = Red;
+}
+
+class Diamonds{
+    Color = Red;
+}
 
 Suit <|-- Spades
 Suit <|-- Hearts
 Suit <|-- Diamonds
 Suit <|-- Clubs
 
-class Origin {
+class SelectedCard {
     +isValid()
 }
 

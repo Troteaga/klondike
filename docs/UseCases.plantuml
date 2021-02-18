@@ -11,38 +11,38 @@ hide empty description
 [*] --> shuffleDeck : The Player runs \nthe application
 shuffleDeck --> generateTableauPiles
 generateTableauPiles --> turnUpperCardFromEachPile
-turnUpperCardFromEachPile --> [*] : The game is presented \nto the Player
+turnUpperCardFromEachPile --> OpenGame : The game is presented \nto the Player
 @enduml
 
 @startuml Player Flips Deck
 
 state choice1 <<choice>> 
 hide empty description 
+state "OpenGame" as 0
 state "Player asks to refresh the Waste" as 1
 state "Put cards in the Waste at the botton of the Deck" as 2
 state "Put three Cards from the top of the Deck to the Waste in reverse order" as 3
 
-[*] -down-> OpenGame
-OpenGame -down-> 1
+0 -down-> 1
 
 1 -down-> choice1
 choice1 -down-> 2: Movement possible
 choice1 -down-> EndGameState: No more possible movements
 2 -down-> 3
-3-up-> OpenGame
+3-down-> OpenGame
 @enduml
 
 
 @enduml
 
 @startuml Player Moves Card From Waste to Tableau
-:Open Game;
+:OpenGame;
 repeat :Player Selects Card in Waste;
 repeat while (Valid Card?) is (no)
 repeat :Player Selects Card in Tableau;
 repeat while (Valid Card?) is (no)
 :Display Movement;
-:Open Game;
+:OpenGame;
 @enduml
 
 @startuml Player Moves Card From Waste to Foundation
@@ -52,40 +52,41 @@ state c <<choice>>
 state d <<choice>>
 state e <<choice>>
 
-[*] -down-> GAME_OPEN
-GAME_OPEN -down-> state1 : Player select Move from Tableau To Tableau
+state "OpenGame" as 0
+
+0 -down-> state1 : Player select Move from Tableau To Tableau
 state1 -down-> state2 : System allows to select Card to be moved
 state2 -down-> c : Player selects Card to be moved
 c --> ShowError : Invalid card
 c --> state3 : Valid card
 state3 --> d : System allows to select destination Pile
 d --> ShowError : Invalid Destination Pile
-ShowError --> GAME_OPEN
+ShowError -up-> 0
 d --> MoveCard : valid destination Pile
 MoveCard --> GameEvaluation : Show Board
-GameEvaluation --> e 
-e --> GAME_CLOSE : Game is finnish
-e -up-> GAME_OPEN: Game is finnish
+GameEvaluation --> e : Evaluate Game 
+e -left-> ClosedGame : Game Finished
+e --> OpenGame: 
 
 @enduml
 
 @startuml States Player Moves Card From Waste to Tableau
 hide empty description
-[*] --> OpenGame
-OpenGame -down-> _ : Player Selects Card in Waste
+state "OpenGame" as 0
+0 -down-> _ : Player Selects Card in Waste
 state choice <<choice>>
 _ --> choice : Is valid card?
-choice --> OpenGame : No
+choice --> 0 : No
 choice --> .:  Yes
 . --> Destination : Player selects destination
 state choice1 <<choice>>
 Destination --> choice1 : Is valid destination?
-choice1 --> DisplayMovement : Yes
+choice1 --> DisplayGame : Yes
 choice1 --> . : No
-DisplayMovement -up-> OpenGame
+DisplayGame --> OpenGame
 @enduml
 
-@startuml
+@startuml Player Moves Card from Tableau to Foundation
 state choice1 <<choice>> 
 state choice2 <<choice>>
 state choice3 <<choice>> 
@@ -94,19 +95,19 @@ hide empty description
 state "Player select card to Move from a Tableau" as 1
 state "Player select a Foundation as destination" as 2
 state "Board is updated" as 3
-OpenGame -down-> 1
+state "OpenGame" as 0
+0 -down-> 1
 
-1 --> choice1
-choice1 --> 2: Selected card can be move
-choice1 --> ShowError : Selected card cannot be move
-
+1 -down-> choice1
+choice1 -down-> 2
+choice1 -right-> ShowError : Selected card cannot be move
 2-down-> choice2
-choice2 --> ShowError : selected Card cannot be move to the selected Foundation
-choice2 --> 3: Foundation can receive Card
-3--> choice3
-choice3 --> Win: All foundations complete
+choice2 -right-> ShowError : Card.Color != Foundation.Color
+choice2 -down-> 3
+3-down-> choice3
+choice3 -right-> Win: All foundations complete
 choice3 --> OpenGame: Foundation not complete
-ShowError -up-> OpenGame
+ShowError -up-> 0
 @enduml
 
 @startuml Player Moves Tableau to Tableu
