@@ -27,6 +27,25 @@ repeat while (Valid Card?) is (no)
 :Open Game;
 @enduml
 
+@startuml States Player Moves Card From Waste to Tableau
+hide empty description
+[*] --> OpenGame
+OpenGame --> Movement : Player Selects Card in Waste
+state choice <<choice>>
+Movement --> choice : Is valid card?
+choice --> Movement : No
+choice --> Destination : Yes
+state choice1 <<choice>>
+Destination --> choice1 : Is valid destination?
+choice1 --> DisplayMovement : Yes
+choice1 --> Destination : No
+DisplayMovement --> OpenGame
+@enduml
+
+
+
+
+
 @startuml Player Request Random Movement
 :**Open Game**;
 :Player Selects Hint;
@@ -47,6 +66,22 @@ else
 endif
 @enduml
 
+@startuml States Request Random Movement
+hide empty description
+OpenGame --> S1 : Player selects Hint
+S1 --> S2 : Show Game after computed movement
+state choice <<choice>>
+S2 --> choice : Is game finished?
+choice --> S3 : yes
+choice --> OpenGame: no
+state choice2 <<choice>>
+S3 --> choice2 : Has won?
+choice2 --> S4 : No
+S4 --> GameClosed : System show Lost
+choice2 --> S5 : Yes
+S5 --> GameClosed : System show Win
+@enduml
+
 @startuml Player Restarts Game
 
 
@@ -59,3 +94,10 @@ endif
 :System close application;
 end
 @enduml
+
+@startuml States Player Exits Game
+hide empty description
+OpenGame --> S1 : Player Selects Exit
+S1 --> [*] : System close application
+@enduml
+
