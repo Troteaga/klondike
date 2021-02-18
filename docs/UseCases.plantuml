@@ -82,9 +82,10 @@ choice1 --> Destination : No
 DisplayMovement --> OpenGame
 @enduml
 
-@startuml States Player Moves Card From Tableau to Foundation
+@startuml
 state choice1 <<choice>> 
-state choice2 <<choice>> 
+state choice2 <<choice>>
+state choice3 <<choice>> 
 
 hide empty description 
 state "Player select card to Move from a Tableau" as 1
@@ -99,7 +100,9 @@ choice1 --> ShowError : Selected card cannot be move
 2-down-> choice2
 choice2 --> ShowError : selected Card cannot be move to the selected Foundation
 choice2 --> 3: Foundation can receive Card
-3--> OpenGame
+3--> choice3
+choice3 --> Win: All foundations complete
+choice3 --> OpenGame: Foundation not complete
 ShowError --> OpenGame
 @enduml
 
