@@ -6,9 +6,12 @@
 
 
 @startuml Player Starts Game
+hide empty description
 
-
-
+[*] --> shuffleDeck : The Player runs \nthe application
+shuffleDeck --> generateFoundationPiles
+generateFoundationPiles --> turnUpperCardFromEachFoundation
+turnUpperCardFromEachFoundation --> [*] : The game is presented \nto the Player
 @enduml
 
 @startuml Player Flips Deck
@@ -38,6 +41,30 @@ repeat :Player Selects Card in Tableau;
 repeat while (Valid Card?) is (no)
 :Display Movement;
 :Open Game;
+@enduml
+
+@startuml Player Moves Card From Waste to Foundation
+
+hide empty description 
+state c <<choice>>
+state d <<choice>>
+state e <<choice>>
+
+[*] -down-> GAME_OPEN
+GAME_OPEN -down-> state1 : Player select Move from Tableau To Tableau
+state1 -down-> state2 : System allows to select Card to be moved
+state2 -down-> c : Player selects Card to be moved
+c --> ShowError : Invalid card
+c --> state3 : Valid card
+state3 --> d : System allows to select destination Pile
+d --> ShowError : Invalid Destination Pile
+ShowError --> GAME_OPEN
+d --> MoveCard : valid destination Pile
+MoveCard --> GameEvaluation : Show Board
+GameEvaluation --> e 
+e --> GAME_CLOSE : Game is finnish
+e --> GAME_OPEN: Game is finnish
+
 @enduml
 
 @startuml States Player Moves Card From Waste to Tableau
@@ -74,6 +101,48 @@ choice2 --> ShowError : selected Card cannot be move to the selected Foundation
 choice2 --> 3: Foundation can receive Card
 3--> OpenGame
 ShowError --> OpenGame
+@enduml
+
+@startuml Player Moves Tableau to Tableu
+
+hide empty description
+
+state c <<choice>>
+state d <<choice>>
+
+[*] --> state1 : Player select Move from Tableau To Tableau
+state1 --> state2 : System allows to select Card to be moved
+state2 --> c : Player selects Card to be moved
+c --> ShowError : Invalid card
+c --> state3 : Valid card
+state3 --> d : System allows to select destination Pile
+d --> ShowError : Invalid Destination Pile
+ShowError --> [*]
+d --> MoveCard : valid destination Pile
+MoveCard --> state5 : Show Board
+state5 --> [*]
+
+@enduml
+
+@startuml Player Moves Foundation to Tableu
+
+hide empty description
+
+state c <<choice>>
+state d <<choice>>
+
+[*] --> state1 : Player select Move from Foundation To Tableau
+state1 --> state2 : System allows to select Card to be moved
+state2 --> c : Player selects Card to be moved
+c --> ShowError : Invalid card
+c --> state3 : Valid card
+state3 --> d : System allows to select destination Pile
+d --> ShowError : Invalid Destination Pile
+ShowError --> [*]
+d --> MoveCard : valid destination Pile
+MoveCard --> state5 : Show Board
+state5 --> [*]
+
 @enduml
 
 
@@ -115,7 +184,15 @@ S5 --> GameClosed : System show Win
 
 @startuml Player Restarts Game
 
+hide empty description
 
+state c <<choice>>
+
+[*] --> Confirmation : The Player request to restart game
+Confirmation --> c : System asks for confirmation
+c --> StartGame : Player confirms restart action
+c --> [*] : Player does not confirm restart action
+StartGame --> [*]
 
 @enduml
 
