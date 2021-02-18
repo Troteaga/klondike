@@ -13,6 +13,19 @@
 
 @startuml Player Flips Deck
 
+state choice1 <<choice>> 
+hide empty description 
+state "Player asks to refresh the Waste" as 1
+state "Put cards in the Waste at the botton of the Deck" as 2
+state "Put three Cards from the top of the Deck to the Waste in reverse order" as 3
+OpenGame --> 1
+
+1 --> choice1
+choice1 --> 2: Movement possible
+choice1 --> EndGameState: No more possible movements
+2 --> 3
+3--> OpenGame
+@enduml
 
 
 @enduml
@@ -42,8 +55,26 @@ choice1 --> Destination : No
 DisplayMovement --> OpenGame
 @enduml
 
+@startuml States Player Moves Card From Tableau to Foundation
+state choice1 <<choice>> 
+state choice2 <<choice>> 
 
+hide empty description 
+state "Player select card to Move from a Tableau" as 1
+state "Player select a Foundation as destination" as 2
+state "Board is updated" as 3
+OpenGame --> 1
 
+1 --> choice1
+choice1 --> 2: Selected card can be move
+choice1 --> ShowError : Selected card cannot be move
+
+2-down-> choice2
+choice2 --> ShowError : selected Card cannot be move to the selected Foundation
+choice2 --> 3: Foundation can receive Card
+3--> OpenGame
+ShowError --> OpenGame
+@enduml
 
 
 @startuml Player Request Random Movement
@@ -84,6 +115,19 @@ S5 --> GameClosed : System show Win
 
 @startuml Player Restarts Game
 
+
+
+@enduml
+
+@startuml Player Request Help Summary
+@startuml
+hide empty description 
+state "Player asks for the help summary" as 1
+state "Help summary is show" as 2
+OpenGame --> 1
+1 --> 2
+2--> OpenGame
+@enduml
 
 
 @enduml
