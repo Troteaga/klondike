@@ -1,0 +1,12 @@
+@startuml
+hide empty description
+[*] --> OpenGame
+StartGame--> OpenGame
+OpenGame --> OpenGame
+OpenGame --> Win
+OpenGame --> Lose
+Win --> [*]
+Lose --> [*]
+Win --> OpenGame
+Lose --> OpenGame
+@enduml
