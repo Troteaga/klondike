@@ -9,9 +9,9 @@
 hide empty description
 
 [*] --> shuffleDeck : The Player runs \nthe application
-shuffleDeck --> generateFoundationPiles
-generateFoundationPiles --> turnUpperCardFromEachFoundation
-turnUpperCardFromEachFoundation --> [*] : The game is presented \nto the Player
+shuffleDeck --> generateTableauPiles
+generateTableauPiles --> turnUpperCardFromEachPile
+turnUpperCardFromEachPile --> [*] : The game is presented \nto the Player
 @enduml
 
 @startuml Player Flips Deck
@@ -21,13 +21,15 @@ hide empty description
 state "Player asks to refresh the Waste" as 1
 state "Put cards in the Waste at the botton of the Deck" as 2
 state "Put three Cards from the top of the Deck to the Waste in reverse order" as 3
-OpenGame --> 1
 
-1 --> choice1
-choice1 --> 2: Movement possible
-choice1 --> EndGameState: No more possible movements
-2 --> 3
-3--> OpenGame
+[*] -down-> OpenGame
+OpenGame -down-> 1
+
+1 -down-> choice1
+choice1 -down-> 2: Movement possible
+choice1 -down-> EndGameState: No more possible movements
+2 -down-> 3
+3-up-> OpenGame
 @enduml
 
 
@@ -63,23 +65,24 @@ d --> MoveCard : valid destination Pile
 MoveCard --> GameEvaluation : Show Board
 GameEvaluation --> e 
 e --> GAME_CLOSE : Game is finnish
-e --> GAME_OPEN: Game is finnish
+e -up-> GAME_OPEN: Game is finnish
 
 @enduml
 
 @startuml States Player Moves Card From Waste to Tableau
 hide empty description
 [*] --> OpenGame
-OpenGame --> Movement : Player Selects Card in Waste
+OpenGame -down-> _ : Player Selects Card in Waste
 state choice <<choice>>
-Movement --> choice : Is valid card?
-choice --> Movement : No
-choice --> Destination : Yes
+_ --> choice : Is valid card?
+choice --> OpenGame : No
+choice --> .:  Yes
+. --> Destination : Player selects destination
 state choice1 <<choice>>
 Destination --> choice1 : Is valid destination?
 choice1 --> DisplayMovement : Yes
-choice1 --> Destination : No
-DisplayMovement --> OpenGame
+choice1 --> . : No
+DisplayMovement -up-> OpenGame
 @enduml
 
 @startuml
@@ -91,7 +94,7 @@ hide empty description
 state "Player select card to Move from a Tableau" as 1
 state "Player select a Foundation as destination" as 2
 state "Board is updated" as 3
-OpenGame --> 1
+OpenGame -down-> 1
 
 1 --> choice1
 choice1 --> 2: Selected card can be move
@@ -103,7 +106,7 @@ choice2 --> 3: Foundation can receive Card
 3--> choice3
 choice3 --> Win: All foundations complete
 choice3 --> OpenGame: Foundation not complete
-ShowError --> OpenGame
+ShowError -up-> OpenGame
 @enduml
 
 @startuml Player Moves Tableau to Tableu
@@ -200,13 +203,12 @@ StartGame --> [*]
 @enduml
 
 @startuml Player Request Help Summary
-@startuml
 hide empty description 
 state "Player asks for the help summary" as 1
 state "Help summary is show" as 2
-OpenGame --> 1
+OpenGame -down-> 1
 1 --> 2
-2--> OpenGame
+2-up-> OpenGame
 @enduml
 
 
