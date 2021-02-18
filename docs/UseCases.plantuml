@@ -48,25 +48,32 @@ repeat while (Valid Card?) is (no)
 @startuml Player Moves Card From Waste to Foundation
 
 hide empty description 
-state c <<choice>>
-state d <<choice>>
-state e <<choice>>
+skinparam linetype polyline
 
-state "OpenGame" as 0
+state "OPEN_GAME" as 0
+state "OPEN_GAME:" as final1
+state c <<choice>> 
+state d <<choice>> 
+state "." as B
 
-0 -down-> state1 : Player select Move from Tableau To Tableau
-state1 -down-> state2 : System allows to select Card to be moved
-state2 -down-> c : Player selects Card to be moved
-c --> ShowError : Invalid card
-c --> state3 : Valid card
-state3 --> d : System allows to select destination Pile
-d --> ShowError : Invalid Destination Pile
-ShowError -up-> 0
-d --> MoveCard : valid destination Pile
-MoveCard --> GameEvaluation : Show Board
-GameEvaluation --> e : Evaluate Game 
-e -left-> ClosedGame : Game Finished
-e --> OpenGame: 
+note right of c
+  Top card of Waste match the following requirements:
+  - Is an Ace, or
+  - Is one upper than top card of the same suite Pile in Foundation
+end note
+
+note right of d
+  Foundation is complete when 
+  it contains all the cards
+end note
+
+0 -down-> c : Player select Move from Waste To Foundation
+c -down-> B : [Card matches requirements?]
+B -down-> d : [Is Foundation complete?]
+d --> CLOSED_GAME : System informs about game completed
+d -down-> ShowBoard : [False]
+c -right-> final1 : System informs about Error
+ShowBoard -down-> final1
 
 @enduml
 
