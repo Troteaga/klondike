@@ -21,7 +21,7 @@ Write destination card as:
 # START GAME
 
 ```
-[D]: #, [W]: 8♠
+[D]: #, [W]: 8♠ 7♦ 4♥
 
 [F]oundries:| _♥ | _♦ | _♣ | _♠ |
             |  1 |  2 |  3 |  4 |

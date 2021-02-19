@@ -1,23 +1,28 @@
 @startuml
-state choice1 <<choice>> 
-state choice2 <<choice>>
-state choice3 <<choice>> 
+left to right direction
+actor Player as p
 
-hide empty description 
-state "Player select card to Move from a Tableau" as 1
-state "Player select a Foundation as destination" as 2
-state "Board is updated" as 3
-OpenGame --> 1
+package Klodike {
+usecase "Start Game" as UC1
+usecase "Move from Waste to Tableau" as UC2
+usecase "Move from Tableau to Tableau" as UC3
+usecase "Move from Tableau to to Foundation" as UC4
+usecase "Move from Tableau to to Tableau" as UC5
+usecase "Flip Deck" as UC6
+usecase "Request Random Movement" as UC7
+usecase "Show Help" as UC8
+usecase "Play Again" as UC9
+usecase "Exit Game" as UC10
+}
 
-1 --> choice1
-choice1 --> 2: Selected card can be move
-choice1 --> ShowError : Selected card cannot be move
-
-2-down-> choice2
-choice2 --> ShowError : selected Card cannot be move to the selected Foundation
-choice2 --> 3: Foundation can receive Card
-3--> choice3
-choice3 --> Win: All foundations complete
-choice3 --> OpenGame: Foundation not complete
-ShowError --> OpenGame
+p--> UC4
+p--> UC1
+p--> UC2
+p--> UC3
+p--> UC5
+p--> UC6
+p--> UC7
+p--> UC8
+p--> UC9
+p--> UC10
 @enduml

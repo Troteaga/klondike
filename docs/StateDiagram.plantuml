@@ -1,12 +1,13 @@
 @startuml
 hide empty description
-[*] --> OpenGame
-StartGame--> OpenGame
-OpenGame --> OpenGame
-OpenGame --> Win
-OpenGame --> Lose
-Win --> [*]
-Lose --> [*]
-Win --> OpenGame
-Lose --> OpenGame
+
+state "**StartGame**" as StartGame_origin
+state a <<choice>> 
+
+StartGame_origin -down-> OpenGame: startGame
+OpenGame -down-> a : Move
+a --> ClosedGame : isFinished
+a --> OpenGame
+OpenGame --> StartGame_origin : Restart
+ClosedGame -up-> StartGame_origin : Play Again
 @enduml
