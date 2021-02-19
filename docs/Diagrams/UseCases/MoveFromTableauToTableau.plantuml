@@ -1,20 +1,39 @@
-@startuml UC_MoveFromTableauToTableau
+@startuml Player Moves Card From Tableau to Tableau
+hide empty description 
+skinparam linetype polyline
 
-hide empty description
+state "**OPEN_GAME**" as OPEN_GAME_INITIAL
+state "**OPEN_GAME**" as OPEN_GAME_FINAL
 
-state c <<choice>>
-state d <<choice>>
+state "**ShowBoard**" as ShowBoard
+state c <<choice>> 
 
-[*] --> state1 : Player select Move from Tableau To Tableau
-state1 --> state2 : System allows to select Card to be moved
-state2 --> c : Player selects Card to be moved
-c --> ShowError : Invalid card
-c --> state3 : Valid card
-state3 --> d : System allows to select destination Pile
-d --> ShowError : Invalid Destination Pile
-ShowError --> [*]
-d --> MoveCard : valid destination Pile
-MoveCard --> state5 : Show Board
-state5 --> [*]
+note right of c
+  The movement is allowed went:
+  - lower card of the selected set of cards is one lower
+    number than top card of destination pile
+end note
+
+state "." as A
+state "." as B
+state "." as C
+state "." as D
+state "." as E
+state "." as F
+state "." as G
+
+OPEN_GAME_INITIAL -down-> A : Player selects Move\nfrom Tableau To Tableau
+A -down-> B : System allows to select Tableau pile source
+B -down-> C : Player selects Source Foundation pile
+C -down-> D : System allows to select number of cards to move
+D -down-> E : Player selects number of cards to move
+E -down-> c : System allows to select destination Tableau pile
+c -down-> F : [allowed]
+F -down-> ShowBoard
+
+c -left-> G 
+G --> OPEN_GAME_FINAL
+
+ShowBoard -down-> OPEN_GAME_FINAL
 
 @enduml
