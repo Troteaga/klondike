@@ -1,0 +1,36 @@
+@startuml UCAnalysis_MoveFromTableauToTableau
+
+mix_actor Player
+
+package views {
+    class MenuView
+    class ErrorView
+    class GameView
+    class BoardView
+    class UserInputView
+
+    GameView *--> BoardView
+    GameView *--> MenuView
+}
+
+package controllers {
+    class MoveFromTableauToTableau
+}
+
+package models {
+    class Card
+    class Tableau
+    Tableau ..> Card
+}
+
+MoveFromTableauToTableau ..> Card
+
+Player -up-> MenuView : "option\n"MoveFromTableauToTableau""
+MenuView --> MoveFromTableauToTableau : execute()
+MoveFromTableauToTableau --> Tableau : \n*get()\n*put(Card)
+MoveFromTableauToTableau --> Tableau : isValidCandidate(Pile, Card)
+MoveFromTableauToTableau --> ErrorView : showError()
+MoveFromTableauToTableau --> GameView : show()
+MoveFromTableauToTableau --> UserInputView : \n*getTableauPile()\n*getNumberOfCards()
+
+@enduml

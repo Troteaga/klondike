@@ -1,0 +1,38 @@
+@startuml UCAnalysis_MoveFromFoundationToTableau
+
+mix_actor Player
+
+package views {
+    class MenuView
+    class ErrorView
+    class GameView
+    class BoardView
+    class UserInputView
+
+    GameView *--> BoardView
+    GameView *--> MenuView
+}
+
+package controllers {
+    class MoveFromFoundationToTableau
+}
+
+package models {
+    class Card
+    class Tableau
+    class Foundation
+    Tableau ..> Card
+    Foundation ..> Card
+}
+
+MoveFromFoundationToTableau ..> Card
+
+Player -up-> MenuView : "option\n"MoveFromFoundationToTableau""
+MenuView --> MoveFromFoundationToTableau : execute()
+MoveFromFoundationToTableau --> Foundation : \n*get()\n*put(Card)
+MoveFromFoundationToTableau --> Tableau : isValidCandidate(Pile, Card)
+MoveFromFoundationToTableau --> ErrorView : showError()
+MoveFromFoundationToTableau --> GameView : show()
+MoveFromFoundationToTableau --> UserInputView : getTableauPile()
+
+@enduml

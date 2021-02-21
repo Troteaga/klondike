@@ -1,0 +1,49 @@
+@startuml UCAnalysis_StartGame
+
+mix_actor Player
+
+package views {
+  class GameView
+  class StartView
+  class MenuView
+  class BoardView
+  class FoundationView
+  class WasteView
+  class TableauView
+  class DeckView
+  BoardView *--> DeckView : <<include>>
+  BoardView *--> WasteView : <<include>>
+  BoardView *--> FoundationView : <<include>>
+  BoardView *--> TableauView : <<include>>
+  BoardView -right[hidden]-> MenuView 
+}
+
+package controllers {
+    class StartGameController
+}
+
+package models {
+    class Deck
+    class Waste
+    class Foundation
+    class Tableau
+    class Card
+    Deck -right[hidden]-> Waste
+    Waste -right[hidden]-> Foundation
+    Foundation -right[hidden]-> Tableau
+    Tableau -right[hidden]-> Card
+}
+
+Player -down-> StartView: "option\n"Start Game""
+StartView -down-> StartGameController : execute()
+StartGameController ..> Card
+StartGameController -right-> Tableau: \n*new()\n*putCard()\n*FlipLastCard()
+StartGameController --> Waste: \n*new()\n*getCard()
+StartGameController --> Foundation: new()
+StartGameController --> Deck: \n*new()\n*suffle()
+
+StartGameController --> GameView : show()
+GameView --> BoardView : show()
+GameView --> MenuView : show()
+
+@enduml

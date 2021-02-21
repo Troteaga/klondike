@@ -1,0 +1,35 @@
+@startuml UseCases
+left to right direction
+actor Player as p
+
+package Game {
+    usecase "Run Application" as UC0
+    usecase "Start Game" as UC1
+    usecase "Request Random Movement" as UC7
+    usecase "Show Help" as UC8
+    usecase "Play Again" as UC9
+    usecase "Exit Game" as UC10
+}
+
+package Movements {
+    usecase "Move from Waste to Tableau" as UC2
+    usecase "Move from Waste to Foundation" as UC11
+    usecase "Move from Tableau to Tableau" as UC3
+    usecase "Move from Tableau to Foundation" as UC4
+    usecase "Move from Foundation to Tableau" as UC12
+    usecase "Flip Deck" as UC6    
+}
+
+p -> UC0
+p--> UC1
+p--> UC2
+p--> UC4
+p--> UC6
+p--> UC7
+p--> UC8
+p--> UC9
+p--> UC10
+p--> UC11
+p--> UC12
+
+@enduml

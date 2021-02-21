@@ -1,13 +1,24 @@
-@startuml
+@startuml States
 hide empty description
 
-state "**StartGame**" as StartGame_origin
 state a <<choice>> 
 
-StartGame_origin -down-> OpenGame: startGame
-OpenGame -down-> a : Move
-a --> ClosedGame : isFinished
-a --> OpenGame
-OpenGame --> StartGame_origin : Restart
-ClosedGame -up-> StartGame_origin : Play Again
+state "**CLOSED_GAME**" as CLOSED_GAME
+state "**OPEN_GAME**" as OPEN_GAME
+
+CLOSED_GAME -down[hidden]-> OPEN_GAME
+[*] -down-> CLOSED_GAME : Player runs the application
+CLOSED_GAME --> OPEN_GAME : StartGame
+
+OPEN_GAME --> OPEN_GAME : \n*ReStartGame\n*MoveFromDeckToWaste\n*MoveFromWasteToTableau\n*MoveFromTableauToTableau\n*FlipCardFromDeck
+OPEN_GAME -left-> a : \n*MoveFromWasteToFoundation\n*MoveFromTableauToFoundation
+
+note left of a
+    [is Foundation complete?]
+end note
+
+a -right-> OPEN_GAME : [False]
+a -right-> CLOSED_GAME : [True]
+CLOSED_GAME -right-> [*] : ExitGame
+
 @enduml
