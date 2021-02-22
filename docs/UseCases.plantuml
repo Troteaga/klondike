@@ -1,10 +1,3 @@
-@startuml Use Cases
-
-
-
-@enduml
-
-
 @startuml Player Starts Game
 hide empty description
 
@@ -14,22 +7,27 @@ generateTableauPiles --> turnUpperCardFromEachPile
 turnUpperCardFromEachPile --> OpenGame : The game is presented \nto the Player
 @enduml
 
-@startuml Player Flips Deck
-
-state choice1 <<choice>> 
+@startuml Player Flips Card from Deck
+state isEmpty <<choice>> 
+state isWasteEmpty <<choice>>
 hide empty description 
 state "OpenGame" as 0
-state "Player asks to refresh the Waste" as 1
-state "Put cards in the Waste at the botton of the Deck" as 2
-state "Put three Cards from the top of the Deck to the Waste in reverse order" as 3
+state " " as 1
+state " " as 2
+state " " as 3
+state " " as 4
+state " " as 5
 
-0 -down-> 1
-
-1 -down-> choice1
-choice1 -down-> 2: Movement possible
-choice1 -down-> EndGameState: No more possible movements
-2 -down-> 3
-3-down-> OpenGame
+0 -down-> 1: Player selects deck
+1 -down-> isEmpty: Is deck empty?
+isEmpty -down-> 2
+isEmpty --> 4: yes
+2 --> 3: System move 3 cards from deck to waste
+4 --> isWasteEmpty: Is waste empty?
+isWasteEmpty -down-> OpenGame : yes
+isWasteEmpty -down-> 5 
+5-->2 : Turn down waste
+3-down-> OpenGame : Show Game
 @enduml
 
 

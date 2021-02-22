@@ -1,0 +1,41 @@
+@startuml Analysis Random Movement
+mix_actor Player
+
+package views {
+    class GameView
+    class ErrorView
+}
+
+Player -right-> GameView
+note on link: Selects Exit
+
+package controllers {
+    class PlayController
+    class RandomMovementController{
+        -getRandomAction()
+    }
+    PlayController *-left-> RandomMovementController
+}
+
+package models{
+    class Game
+}
+
+PlayController -up-> GameView
+note on link : getAction()
+
+RandomMovementController --> ErrorView
+note on link : showError()
+
+RandomMovementController --> Game
+note on link: getCardFromWaste()\
+\ngetCardFromPile(n,m)\
+\ngetCardFromFoundation(n)\
+\nisValidOrigin(Card)\
+\nisValidCandidate(Pile, Card)\
+\nputCardInFoundation(Card)\
+\nputCardInPile(Pile, Card)
+
+
+
+@enduml

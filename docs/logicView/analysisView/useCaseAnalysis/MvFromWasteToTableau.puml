@@ -1,0 +1,52 @@
+@startuml UCAnalysis_MoveFromWasteToTableau
+mix_actor Player
+
+package views {
+    class MenuView
+    class ErrorView
+    class GameView
+    class BoardView
+
+    GameView *--> BoardView
+    note on link: showBoard()
+    
+    GameView *--> MenuView
+}   
+
+package controllers {
+    class PlayController
+    class MoveFromWasteToTableau
+    PlayController *-right-> MoveFromWasteToTableau
+}
+
+package models {
+    class Game
+    class Card
+    class Tableau
+    class Waste
+    Tableau ..> Card
+    Waste ..> Card
+    Game *-->Waste
+    Game *-->Tableau
+}
+
+
+Player -up-> GameView
+note on link: Select source Card\
+\nSelect destination\
+\nSelect Action
+
+MoveFromWasteToTableau ..> Card
+PlayController --> GameView
+note on link: readAction()
+
+
+MoveFromWasteToTableau -down-> GameView
+note on link: readSourceCard()\nreadDestination()\nshowBoard()
+MoveFromWasteToTableau -down-> Game
+note on link: getCardFromWaste()\ngetPile(n)\nisValidCandidate(Pile,Card)\nputInPile(Pile, Card)
+
+
+MoveFromWasteToTableau -down-> ErrorView
+note on link: showError()
+@enduml

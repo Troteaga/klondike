@@ -7,44 +7,10 @@ together {
     class Tableau
 }
 
-together {
-    class SelectedCard
-    class Destination
-}
-
-Game *-left-> Player
 Game *--> Tableau
 Game *--> "4" Foundation
 Game *--> Deck
 Game *--> Waste
-Game *-right-> Movement
-
-Movement *--> SelectedCard
-Movement *--> Destination
-
-SelectedCard *--> Source
-SelectedCard *--> Card
-
-Destination *--> Target
-Destination *--> Card
-
-together {
-    interface Source {
-    }
-    interface Target {
-    }
-}
-
-
-
-
-Foundation -up-|> Source
-Pile -up-|> Source
-Waste -up-|> Source
-
-Foundation -up-|> Target
-Pile -up-|> Target
-
 
 Foundation *--> "0..13" Card
 Tableau *--> "7" Pile
@@ -60,7 +26,6 @@ enum State {
     FaceUp
     FaceDown
 }
-
 
 enum Number{
     1
@@ -99,14 +64,6 @@ Suit <|-- Spades
 Suit <|-- Hearts
 Suit <|-- Diamonds
 Suit <|-- Clubs
-
-class SelectedCard {
-    +isValid()
-}
-
-class Destination {
-    +isValid()
-}
 
 @enduml
 
