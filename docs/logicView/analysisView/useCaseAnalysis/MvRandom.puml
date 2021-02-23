@@ -12,7 +12,7 @@ note on link: Selects Exit
 package controllers {
     class PlayController
     class RandomMovementController{
-        -getRandomAction()
+        -generateRandomAction()
     }
     PlayController *-left-> RandomMovementController
 }
@@ -29,13 +29,12 @@ note on link : showError()
 
 RandomMovementController --> Game
 note on link: getCardFromWaste()\
+\ngetPileSize(n)\
 \ngetCardFromPile(n,m)\
 \ngetCardFromFoundation(n)\
-\nisValidOrigin(Card)\
-\nisValidCandidate(Pile, Card)\
+\nisValidCandidateInPile(n, Card)\
+\nisValidCandidateInFoundation(Card)\
 \nputCardInFoundation(Card)\
-\nputCardInPile(Pile, Card)
-
-
+\nputCardInPile(n, Card)
 
 @enduml

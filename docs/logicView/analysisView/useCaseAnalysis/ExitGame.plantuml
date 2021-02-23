@@ -1,3 +1,33 @@
-@startuml UCAnalysis_ExitGame
+@startuml Analysis Exit Game
+mix_actor Player
+
+package views {
+    class GameView
+    class ExitView
+}
+
+Player -right-> GameView
+note on link: Selects Exit
+
+package controllers {
+    class PlayController
+    class ExitController{
+        exit()
+    }
+    PlayController *-left-> ExitController
+}
+
+package models{
+    class Game
+}
+
+PlayController -up-> GameView
+note on link : getAction()
+
+ExitController -down-> Game
+note on link : isGameClosed()
+
+ExitController --> ExitView
+note on link : readConfirmation()
 
 @enduml

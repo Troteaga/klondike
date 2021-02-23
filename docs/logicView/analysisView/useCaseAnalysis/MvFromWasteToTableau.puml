@@ -32,9 +32,8 @@ package models {
 
 
 Player -up-> GameView
-note on link: Select source Card\
-\nSelect destination\
-\nSelect Action
+note on link: Select action\
+\nSelect destination
 
 MoveFromWasteToTableau ..> Card
 PlayController --> GameView
@@ -42,10 +41,9 @@ note on link: readAction()
 
 
 MoveFromWasteToTableau -down-> GameView
-note on link: readSourceCard()\nreadDestination()\nshowBoard()
+note on link: readDestination()\nshowBoard()
 MoveFromWasteToTableau -down-> Game
-note on link: getCardFromWaste()\ngetPile(n)\nisValidCandidate(Pile,Card)\nputInPile(Pile, Card)
-
+note on link: getCardFromWaste()\nisValidCandidate(n,Card)\nputInPile(n, Card)
 
 MoveFromWasteToTableau -down-> ErrorView
 note on link: showError()
