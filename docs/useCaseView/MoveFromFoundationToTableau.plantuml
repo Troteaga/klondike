@@ -1,4 +1,4 @@
-@startuml Player Moves Card From Foundation to Tableau
+@startuml MoveFromFoundationToTableau
 hide empty description 
 skinparam linetype polyline
 
@@ -19,6 +19,7 @@ state "." as B
 state "." as C
 state "." as D
 state "." as E
+state "." as F
 state "." as H
 state "." as J
 

@@ -1,0 +1,39 @@
+@startuml UCAnalysis_MoveFromWasteToFoundation
+
+mix_actor Player
+
+package views {
+    class MenuView
+    class GameCompleteView
+    class ErrorView
+    class GameView
+    class BoardView
+
+    GameView *--> BoardView
+    GameView *--> MenuView
+}
+
+package controllers {
+    class MoveFromWasteToFoundation
+}
+
+package models {
+    class Card
+    class Waste
+    class Foundation
+    Waste ..> Card
+    Foundation ..> Card
+}
+
+MoveFromWasteToFoundation ..> Card
+
+Player -up-> MenuView : "option\n"MoveFromWasteToFoundation""
+MenuView --> MoveFromWasteToFoundation : execute()
+MoveFromWasteToFoundation --> Waste : \n*get()\n*put(Card)
+MoveFromWasteToFoundation --> Foundation : \n*isValidCandidate(Card)\n*isComplete()
+MoveFromWasteToFoundation --> Foundation : put(Card)
+MoveFromWasteToFoundation --> ErrorView : showError()
+MoveFromWasteToFoundation --> GameView : show()
+MoveFromWasteToFoundation --> GameCompleteView : show()
+
+@enduml

@@ -1,0 +1,20 @@
+@startuml UCAnalysis ReStartGame
+
+mix_actor Player
+
+package views {
+  class MenuView
+  class ConfirmationView
+}
+
+package controllers{
+    class RestartGameController
+    class StartGameController
+}
+
+Player --> MenuView : restartOption
+MenuView --> RestartGameController : execute()
+RestartGameController --> ConfirmationView : confirm()
+RestartGameController --> StartGameController : execute()
+
+@enduml
