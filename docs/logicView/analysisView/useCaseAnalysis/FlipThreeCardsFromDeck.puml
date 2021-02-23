@@ -1,0 +1,43 @@
+	@startuml
+	mix_actor Player
+
+	package views {
+		class MenuView
+		class ErrorView
+		class GameView
+		class BoardView
+
+		GameView *--> BoardView
+		note on link: showBoard()
+		
+		GameView *--> MenuView
+	}   
+
+	package controllers {
+		class FlipThreeCardsFromDeck  
+	}
+
+	package models {
+		class Game
+		class Card
+		class Deck
+		class Waste
+		Deck *--> Card
+		Waste *--> Card
+		Game *-->Waste
+		Game *-->Deck
+	}
+
+
+	Player -right-> MenuView
+	note on link: Select deck\
+
+
+	FlipThreeCardsFromDeck -down-> GameView
+	note on link: showBoard()
+	FlipThreeCardsFromDeck -down-> Game
+	note on link: isDeckEmpty()\nisWasteEmpty()\npopCardFromDeck()\nputCardInWaste(card)\nputWasteInDeck()
+
+	FlipThreeCardsFromDeck  -down-> ErrorView
+	note on link: showError()
+	@enduml
