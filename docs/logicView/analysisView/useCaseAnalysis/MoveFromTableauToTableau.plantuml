@@ -7,30 +7,45 @@ package views {
     class ErrorView
     class GameView
     class BoardView
-    class UserInputView
 
     GameView *--> BoardView
+    note on link: showBoard()
+
     GameView *--> MenuView
 }
 
 package controllers {
+    class PlayController
     class MoveFromTableauToTableau
+    PlayController *-right-> MoveFromTableauToTableau
 }
 
 package models {
-    class Card
+    class Game
+    class Pile
     class Tableau
-    Tableau ..> Card
+    Tableau ..> Pile
+    Game *-->Tableau
 }
 
-MoveFromTableauToTableau ..> Card
+PlayController --> GameView
+note on link: readAction()
 
-Player -up-> MenuView : "option\n"MoveFromTableauToTableau""
-MenuView --> MoveFromTableauToTableau : execute()
-MoveFromTableauToTableau --> Tableau : \n*get()\n*put(Card)
-MoveFromTableauToTableau --> Tableau : isValidCandidate(Pile, Card)
-MoveFromTableauToTableau --> ErrorView : showError()
-MoveFromTableauToTableau --> GameView : show()
-MoveFromTableauToTableau --> UserInputView : \n*getTableauPile()\n*getNumberOfCards()
+
+Player -down-> GameView
+note on link: Select action\
+\nSelect destination\
+\nSelect number of cards
+
+MoveFromTableauToTableau --> Game
+note on link : getFromPile(n)\nputInPile(n, Card)
+
+MoveFromTableauToTableau --> ErrorView
+note on link: showError()
+
+MoveFromTableauToTableau --> GameView 
+note on link: showBoard()
+
+ErrorView -left[hidden]-> GameView
 
 @enduml

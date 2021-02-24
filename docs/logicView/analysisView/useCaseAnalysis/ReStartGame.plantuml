@@ -3,18 +3,26 @@
 mix_actor Player
 
 package views {
+  class GameView
   class MenuView
   class ConfirmationView
+  GameView --> MenuView
 }
 
 package controllers{
+    class PlayController
     class RestartGameController
     class StartGameController
+    PlayController --> RestartGameController
 }
 
-Player --> MenuView : restartOption
-MenuView --> RestartGameController : execute()
+Player -left-> GameView
+note on link: Select action
+
 RestartGameController --> ConfirmationView : confirm()
-RestartGameController --> StartGameController : execute()
+RestartGameController --> StartGameController
+
+PlayController --> GameView
+note on link: readAction
 
 @enduml
