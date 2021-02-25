@@ -7,32 +7,53 @@ package views {
     class ErrorView
     class GameView
     class BoardView
-    class UserInputView
 
     GameView *--> BoardView
     GameView *--> MenuView
 }
 
 package controllers {
+    class PlayController
     class MoveFromFoundationToTableau
+    PlayController *-right-> MoveFromFoundationToTableau
 }
 
 package models {
+    class Game
     class Card
     class Tableau
     class Foundation
-    Tableau ..> Card
+    class Pile
+
+    Game ..> Tableau
+    Game ..> Foundation 
+    Tableau ..> Pile
+    Pile ..> Card
     Foundation ..> Card
+    Tableau -right[hidden]-> Foundation
 }
 
-MoveFromFoundationToTableau ..> Card
+Player -up-> GameView
+note on link : Select action\
+\nSelect origin\
+\nSelect destination
+GameView -left[hidden]-> Player
 
-Player -up-> MenuView : "option\n"MoveFromFoundationToTableau""
-MenuView --> MoveFromFoundationToTableau : execute()
-MoveFromFoundationToTableau --> Foundation : \n*get()\n*put(Card)
-MoveFromFoundationToTableau --> Tableau : isValidCandidate(Pile, Card)
-MoveFromFoundationToTableau --> ErrorView : showError()
-MoveFromFoundationToTableau --> GameView : show()
-MoveFromFoundationToTableau --> UserInputView : getTableauPile()
+note on link : Select action\
+\nSelect origin\
+\nSelect destination 
+
+PlayController --> GameView
+note on link: readAction()
+
+MoveFromFoundationToTableau --> Game
+note on link : getCardFromFoundation(n)\
+\nputCardInTableau(n, Card)\
+\nisValidCandidateInTableau()
+
+MoveFromFoundationToTableau --> ErrorView
+note on link : showError()
+MoveFromFoundationToTableau --> GameView 
+note on link : showBoard()
 
 @enduml

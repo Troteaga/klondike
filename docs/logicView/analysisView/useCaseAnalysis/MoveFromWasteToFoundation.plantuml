@@ -10,30 +10,49 @@ package views {
     class BoardView
 
     GameView *--> BoardView
+    note on link: showBoard()
+
     GameView *--> MenuView
+    note on link: Select action\nSelect destination
 }
 
 package controllers {
+    class PlayController
     class MoveFromWasteToFoundation
+    PlayController *-right-> MoveFromWasteToFoundation
 }
 
 package models {
+    class Game
     class Card
     class Waste
     class Foundation
     Waste ..> Card
     Foundation ..> Card
+    Game *-->Waste
+    Game *-->Foundation
 }
 
 MoveFromWasteToFoundation ..> Card
 
-Player -up-> MenuView : "option\n"MoveFromWasteToFoundation""
-MenuView --> MoveFromWasteToFoundation : execute()
-MoveFromWasteToFoundation --> Waste : \n*get()\n*put(Card)
-MoveFromWasteToFoundation --> Foundation : \n*isValidCandidate(Card)\n*isComplete()
-MoveFromWasteToFoundation --> Foundation : put(Card)
-MoveFromWasteToFoundation --> ErrorView : showError()
-MoveFromWasteToFoundation --> GameView : show()
-MoveFromWasteToFoundation --> GameCompleteView : show()
+Player -up-> MenuView
+note on link: Select action\
+\nSelect destination
+
+
+PlayController --> GameView
+note on link: readAction()
+
+MoveFromWasteToFoundation --> ErrorView
+note on link: showError()
+
+MoveFromWasteToFoundation --> GameView
+note on link: showBoard()
+
+MoveFromWasteToFoundation -down-> Game
+note on link: getCardFromWaste()\nisValidCandidateFoundation(Card)\nputInFoundation(Card)\nisFoundationComplete()
+
+MoveFromWasteToFoundation --> GameCompleteView 
+note on link: showWinner()
 
 @enduml
